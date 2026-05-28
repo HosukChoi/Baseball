@@ -15,14 +15,14 @@ public:
 	}
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
-		if (guessNumber == question) {
-			return { true, 3, 0 };
+		int strike_cnt = 0;
+		for (auto ch : guessNumber) {
+			if (question.find(ch) !=
+				std::string::npos) {
+				strike_cnt++;
+			}
 		}
-		if (guessNumber[0] == question[0] &&
-			guessNumber[1] == question[1]) {
-			return { false, 2, 0 };
-		}
-		return { false, 0, 0 };
+		return { (strike_cnt==3), strike_cnt, 0 };
 	}
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
