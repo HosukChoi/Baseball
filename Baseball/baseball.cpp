@@ -15,17 +15,19 @@ public:
 	}
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
+
+		int ball_cnt = 0;
 		int strike_cnt = 0;
-		if (guessNumber == "132") {
-			return { false, 1, 2 };
-		}
-		for (auto ch : guessNumber) {
-			if (question.find(ch) !=
-				std::string::npos) {
+
+		for (int i = 0; i < 3; i++) {
+			if (question[i] == guessNumber[i]) {
 				strike_cnt++;
 			}
+			else if (question.find(guessNumber[i]) != std::string::npos) {
+				ball_cnt++;
+			}
 		}
-		return { (strike_cnt==3), strike_cnt, 0 };
+		return { (strike_cnt == 3), strike_cnt, ball_cnt };
 	}
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
